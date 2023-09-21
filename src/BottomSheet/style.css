@@ -1,0 +1,150 @@
+:root {
+  --background: #fff;
+  --foreground: #000;
+  --divider: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+  --overlay: #888;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(2, 0, 36);
+    --background: linear-gradient(
+      to bottom left,
+      rgba(5, 84, 94, 1) 16%,
+      #bbb 91.1%
+    );
+    --foreground: #fff;
+    --divider: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+  }
+}
+
+body {
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+[contenteditable="true"] {
+  box-sizing: border-box;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0.0625rem solid var(--divider);
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  visibility: visible;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.sheet[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: var(--overlay);
+  opacity: 0.5;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem 1rem 0 0;
+  background: var(--background);
+  overflow-y: hidden;
+  --default-transitions: transform 0.5s, border-radius 0.5s;
+  transition: var(--default-transitions);
+  transform: translateY(0);
+  width: 70vw;
+  max-height: 100vh;
+  height: 30vh;
+  box-sizing: border-box;
+}
+
+.contents:not(.not-selectable) {
+  transition: var(--default-transitions), height 0.5s;
+}
+
+.contents.fullscreen {
+  border-radius: 0;
+}
+
+.sheet[aria-hidden="true"] .contents {
+  transform: translateY(100%);
+}
+
+.controls {
+  display: flex;
+}
+
+.draggable-area {
+  width: 3rem;
+  margin: auto;
+  padding: 1rem;
+  cursor: grab;
+}
+
+.draggable-thumb {
+  width: inherit;
+  height: 0.25rem;
+  background: var(--divider);
+  border-radius: 0.125rem;
+}
+
+.close-sheet {
+  border: none;
+  padding: 0.5rem 0rem;
+}
+
+.body {
+  flex-grow: 1;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  gap: 1rem;
+
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 900px) {
+  .contents {
+    min-width: 250px;
+    max-width: 900px;
+    width: 100vw;
+  }
+}
